@@ -54,6 +54,7 @@ export default function SignIn() {
 
       <div className="text-center my-4 text-gray-400">or</div>
 
+      {/* Google Button */}
       <button
         type="button"
         className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-100 gap-2"
@@ -65,6 +66,20 @@ export default function SignIn() {
           <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
         </svg>
         Continue with Google
+      </button>
+
+      {/* Microsoft Button */}
+      <button
+        type="button"
+        className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-100 gap-2"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <rect x="0" y="0" width="11" height="11" fill="#F35325"/>
+          <rect x="13" y="0" width="11" height="11" fill="#81BC06"/>
+          <rect x="0" y="13" width="11" height="11" fill="#05A6F0"/>
+          <rect x="13" y="13" width="11" height="11" fill="#FFBA08"/>
+        </svg>
+        Continue with Microsoft
       </button>
     </form>
   );

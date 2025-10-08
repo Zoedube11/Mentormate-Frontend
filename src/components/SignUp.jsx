@@ -100,7 +100,6 @@ export default function SignUp({ formData, handleChange, handleSubmit }) {
             />
           </div>
 
-          {/* Password */}
           <div className="relative">
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input
@@ -120,7 +119,6 @@ export default function SignUp({ formData, handleChange, handleSubmit }) {
             </button>
           </div>
 
-          {/* Confirm Password */}
           <div className="relative">
             <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
             <input
@@ -222,6 +220,20 @@ export default function SignUp({ formData, handleChange, handleSubmit }) {
             </svg>
             Continue with Google
           </button>
+
+          {/* Microsoft Button */}
+          <button
+            type="button"
+            className="w-full py-3.5 text-base font-medium bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-3"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <rect x="0" y="0" width="11" height="11" fill="#F35325"/>
+              <rect x="13" y="0" width="11" height="11" fill="#81BC06"/>
+              <rect x="0" y="13" width="11" height="11" fill="#05A6F0"/>
+              <rect x="13" y="13" width="11" height="11" fill="#FFBA08"/>
+            </svg>
+            Continue with Microsoft
+          </button>
         </div>
       )}
 
@@ -235,4 +247,3 @@ export default function SignUp({ formData, handleChange, handleSubmit }) {
     </form>
   );
 }
-
