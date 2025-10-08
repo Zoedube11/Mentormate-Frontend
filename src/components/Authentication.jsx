@@ -1,274 +1,35 @@
 import { useState } from "react";
-import MamaDuduImg from "../assets/character3.png";
-import OomPietImg from "../assets/character.png";
-import BraVusiImg from "../assets/character2.png"; 
-import MrRakeshImg from "../assets/character4.png";
-import SisNandiImg from "../assets/character5.png";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 export default function Authentication() {
   const [activeTab, setActiveTab] = useState("signin");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Multi-step signup
-  const [step, setStep] = useState(1);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [signinShowPassword, setSigninShowPassword] = useState(false);
-
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    birthDate: "",
-    phone: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    terms: false,
+    firstName: "", lastName: "", birthDate: "", phone: "",
+    email: "", password: "", confirmPassword: "", terms: false,
   });
-
-  const experts = [
-    { name: "Mama Dudu", image: MamaDuduImg, link: "/chat_water", areas: ["Environmental Engineering", "Water Management", "Wastewater treatment"] },
-    { name: "Oom Piet", image: OomPietImg, link: "/chat", areas: ["Soil mechanics", "Geology and hydrogeology", "Tailings Engineering"] },
-    { name: "Bra Vusi", image: BraVusiImg, link: "/chat_concrete", areas: ["Concrete construction", "Structural design", "Foundations"] },
-    { name: "Mr Rakesh", image: MrRakeshImg, link: "/chat_electrical", areas: ["Electrical power systems", "Integrated energy planning", "Renewables"] },
-    { name: "Sis Nandi", image: SisNandiImg, link: "/chat_mining", areas: ["Metallurgical processes", "Resource characterisation", "Mining Engineering"] },
-  ];
-
-  const toggleTab = (tab) => {
-    setActiveTab(tab);
-    setStep(1); 
-  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    setFormData(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
   };
-
-  const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     alert("Account created successfully!");
-    setIsLoggedIn(true);
   };
 
-  if (!isLoggedIn) {
-    return (
-      <div className="flex justify-center py-10">
-        <div className="w-full max-w-md p-8 min-h-[650px] flex flex-col justify-center">
-
-          {/* Tabs */}
-          <div className="flex mb-4 border-b">
-            <button
-              className={`flex-1 py-2 text-center font-semibold ${activeTab === "signin" ? "border-b-2 border-blue-600" : "text-gray-500"}`}
-              onClick={() => toggleTab("signin")}
-            >
-              Sign In
-            </button>
-            <button
-              className={`flex-1 py-2 text-center font-semibold ${activeTab === "signup" ? "border-b-2 border-blue-600" : "text-gray-500"}`}
-              onClick={() => toggleTab("signup")}
-            >
-              Sign Up
-            </button>
-          </div>
-
-          {/* Sign In Form */}
-          {activeTab === "signin" && (
-            <form className="space-y-4">
-              <h2 className="text-xl font-bold">Sign in</h2>
-              <p className="text-gray-600 text-sm">Log in to unlock instant expertise</p>
-
-              <div>
-                <label htmlFor="signin-email" className="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" id="signin-email" placeholder="Email" required className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </div>
-
-              <div className="relative">
-                <label htmlFor="signin-password" className="block text-sm font-medium text-gray-700">Password</label>
-                <input
-                  type={signinShowPassword ? "text" : "password"}
-                  id="signin-password"
-                  placeholder="Password"
-                  required
-                  className="mt-1 block w-full border rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" onClick={() => setSigninShowPassword(!signinShowPassword)}>👁️</button>
-              </div>
-
-              <div className="flex justify-between items-center text-sm text-gray-600">
-                <label className="flex items-center">
-                  <input type="checkbox" className="mr-1" />
-                  Keep me signed in
-                </label>
-                <a href="#" className="text-blue-600 hover:underline">Forgot password?</a>
-              </div>
-
-              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700">Sign in</button>
-
-              {/* Divider */}
-              <div className="text-center my-4 text-gray-400">or</div>
-
-              {/* Google Sign In */}
-              <button type="button" className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-100 gap-2">
-                <svg width="18" height="18" viewBox="0 0 48 48">
-                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                </svg>
-                Continue with Google
-              </button>
-            </form>
-          )}
-
-          {/* Sign Up Form */}
-          {activeTab === "signup" && (
-            <form onSubmit={handleSubmit} className="space-y-4">
-                
-              {/* Progress Bar */}
-              <div className="mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-medium text-gray-600">Step {step} of 3</span>
-                  <span className="text-xs font-medium text-gray-600">{Math.round((step / 3) * 100)}%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-blue-500 h-2 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${(step / 3) * 100}%` }}></div>
-                </div>
-              </div>
-
-              {/* Step 1: Personal Info */}
-              {step === 1 && (
-                <div className="space-y-4">
-                  <h2 className="text-xl font-bold">Personal Info</h2>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">First Name</label>
-                      <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Last Name</label>
-                      <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Birth Date</label>
-                    <input type="date" name="birthDate" value={formData.birthDate} onChange={handleChange} required className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  </div>
-                  <button type="button" onClick={nextStep} className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700">Next</button>
-                </div>
-              )}
-
-              {/* Step 2: Account Setup */}
-              {step === 2 && (
-                <div className="space-y-4">
-                  <h2 className="text-xl font-bold">Account Setup</h2>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  </div>
-                  {/* Password */}
-                  <div className="relative">
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
-                    <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} required className="mt-1 block w-full border rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" onClick={() => setShowPassword(!showPassword)}>👁️</button>
-                  </div>
-                  {/* Confirm Password */}
-                  <div className="relative">
-                    <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                    <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required className="mt-1 block w-full border rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>👁️</button>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <button type="button" onClick={prevStep} className="w-1/3 bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300">Back</button>
-                    <button type="button" onClick={nextStep} className="w-2/3 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Next</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 3: Review */}
-              {step === 3 && (
-                <div className="space-y-5 animate-fadeIn">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-4">Almost Done!</h3>
-
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p className="text-sm text-gray-700 mb-2">
-                      <span className="font-semibold">Review your information:</span>
-                    </p>
-                    <p className="text-sm text-gray-600">{formData.firstName} {formData.lastName}</p>
-                    <p className="text-sm text-gray-600">{formData.email}</p>
-                    <p className="text-sm text-gray-600">{formData.phone}</p>
-                  </div>
-
-                  <div>
-                    <label className="flex items-start cursor-pointer">
-                      <input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} required className="w-4 h-4 mr-3 mt-1 cursor-pointer accent-blue-500" />
-                      <span className="text-sm text-gray-700">
-                        I accept the <a href="#" className="text-blue-600 hover:underline">Terms and Conditions</a> and <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a>
-                      </span>
-                    </label>
-                  </div>
-
-                  <button type="submit" className="w-full py-3.5 text-base font-semibold bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors mt-4">Create Account</button>
-                  <button type="button" onClick={prevStep} className="w-full py-3.5 text-base font-semibold bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">Back</button>
-
-                  <div className="flex items-center my-5">
-                    <div className="flex-1 h-px bg-gray-300"></div>
-                    <span className="px-4 text-sm text-gray-500">or</span>
-                    <div className="flex-1 h-px bg-gray-300"></div>
-                  </div>
-
-                  <button type="button" className="w-full py-3.5 text-base font-medium bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-3">
-                    <svg width="18" height="18" viewBox="0 0 48 48">
-                      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                    </svg>
-                    Continue with Google
-                  </button>
-                </div>
-              )}
-            </form>
-          )}
-
-          <style>{`
-            @keyframes fadeIn {
-              from { opacity: 0; transform: translateY(10px); }
-              to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
-          `}</style>
-        </div>
-      </div>
-    );
-  }
-
-  // After-login expert selection
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Choose your expert below!</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {experts.map((expert, i) => (
-          <div key={i} onClick={() => window.location.href = expert.link} className="border rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition">
-            <img src={expert.image} alt={expert.name} className="w-full h-48 object-cover rounded-md mb-2" />
-            <h3 className="font-semibold text-lg">{expert.name}</h3>
-            <p className="font-medium mt-1">Areas of expertise include:</p>
-            <ul className="list-disc list-inside text-gray-600">
-              {expert.areas.map((area, idx) => <li key={idx}>{area}</li>)}
-            </ul>
-          </div>
-        ))}
+    <div className="flex justify-center py-10">
+      <div className="w-full max-w-md p-8 min-h-[650px] flex flex-col justify-center">
+        <div className="flex mb-4 border-b">
+          <button className={`flex-1 py-2 text-center font-semibold ${activeTab==="signin"?"border-b-2 border-blue-600":"text-gray-500"}`} onClick={()=>setActiveTab("signin")}>Sign In</button>
+          <button className={`flex-1 py-2 text-center font-semibold ${activeTab==="signup"?"border-b-2 border-blue-600":"text-gray-500"}`} onClick={()=>setActiveTab("signup")}>Sign Up</button>
+        </div>
+
+        {activeTab==="signin" && <SignIn />}
+        {activeTab==="signup" && <SignUp formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />}
       </div>
     </div>
   );
