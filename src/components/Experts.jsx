@@ -70,7 +70,7 @@ export default function Experts() {
           {duplicatedExperts.map((expert, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[250px] bg-white rounded-xl border border-gray-200 shadow p-6 text-center hover:shadow-lg hover:-translate-y-1 transition-transform cursor-pointer"
+              className="flex-shrink-0 w-[250px] bg-white rounded-xl border border-gray-200 shadow p-6 hover:shadow-lg hover:-translate-y-1 transition-transform cursor-pointer"
               onClick={() => window.location.href = `/chat_${expert.name.toLowerCase().replace(" ", "_")}`}
             >
               <img
@@ -78,9 +78,9 @@ export default function Experts() {
                 alt={expert.name}
                 className="w-28 h-28 rounded-full object-cover mx-auto mb-4"
               />
-              <h3 className="font-semibold text-lg text-gray-900 mb-1">{expert.name}</h3>
-              <p className="text-gray-600 font-medium text-sm mb-2">Areas of expertise include:</p>
-              <ul className="list-disc list-inside text-gray-600 text-sm">
+              <h3 className="font-semibold text-lg text-gray-900 mb-1 text-center">{expert.name}</h3>
+              <p className="text-gray-600 font-medium text-sm mb-2 text-center">Areas of expertise include:</p>
+              <ul className="list-disc list-inside text-gray-600 text-sm text-left space-y-1">
                 {expert.areas.map((area, i) => <li key={i}>{area}</li>)}
               </ul>
             </div>
