@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+// src/components/Experts.jsx
+import React, { useRef, useState, useEffect } from "react";
 import MamaDuduImg from "../assets/character3.png";
 import OomPietImg from "../assets/character.png";
 import BraVusiImg from "../assets/character2.png";
@@ -7,19 +8,38 @@ import SisNandiImg from "../assets/character5.png";
 
 export default function Experts() {
   const experts = [
-    { name: "Mama Dudu", image: MamaDuduImg, areas: ["Environmental Engineering", "Water Management", "Wastewater treatment"] },
-    { name: "Oom Piet", image: OomPietImg, areas: ["Soil mechanics", "Geology and hydrogeology", "Tailings Engineering"] },
-    { name: "Bra Vusi", image: BraVusiImg, areas: ["Concrete construction", "Structural design", "Foundations"] },
-    { name: "Mr Rakesh", image: MrRakeshImg, areas: ["Electrical power systems", "Integrated energy planning", "Renewables"] },
-    { name: "Sis Nandi", image: SisNandiImg, areas: ["Metallurgical processes", "Resource characterisation", "Mining Engineering"] },
+    {
+      name: "Mama Dudu",
+      image: MamaDuduImg,
+      areas: ["Environmental Engineering", "Water Management", "Wastewater Treatment"],
+    },
+    {
+      name: "Oom Piet",
+      image: OomPietImg,
+      areas: ["Soil Mechanics", "Geology & Hydrogeology", "Tailings Engineering"],
+    },
+    {
+      name: "Bra Vusi",
+      image: BraVusiImg,
+      areas: ["Concrete Construction", "Structural Design", "Foundations"],
+    },
+    {
+      name: "Mr Rakesh",
+      image: MrRakeshImg,
+      areas: ["Electrical Power Systems", "Integrated Energy Planning", "Renewables"],
+    },
+    {
+      name: "Sis Nandi",
+      image: SisNandiImg,
+      areas: ["Metallurgical Processes", "Resource Characterisation", "Mining Engineering"],
+    },
   ];
 
   const containerRef = useRef(null);
   const [offset, setOffset] = useState(0);
-  const scrollSpeed = 0.5; 
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 768);
+  const scrollSpeed = 0.5;
 
-  // Duplicate experts for seamless loop
+  // Duplicate experts for seamless scrolling
   const duplicatedExperts = [...experts, ...experts, ...experts];
 
   useEffect(() => {
@@ -29,28 +49,14 @@ export default function Experts() {
       const container = containerRef.current;
       if (!container) return;
 
-      const totalWidth = container.scrollWidth / 3; 
-
-      setOffset(prev => {
-        const newOffset = prev + scrollSpeed;
-        if (newOffset >= totalWidth) return 0;
-        return newOffset;
-      });
+      const totalWidth = container.scrollWidth / 3;
+      setOffset((prev) => (prev + scrollSpeed >= totalWidth ? 0 : prev + scrollSpeed));
 
       animationId = requestAnimationFrame(animate);
     };
 
     animate();
-
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth > 768);
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => cancelAnimationFrame(animationId);
   }, []);
 
   return (
@@ -59,9 +65,9 @@ export default function Experts() {
         Choose your expert below!
       </h2>
 
-      <div className="overflow-hidden w-full" ref={containerRef}>
+      <div className="overflow-hidden w-full py-3" ref={containerRef}>
         <div
-          className="flex gap-6"
+          className="flex gap-4"
           style={{
             transform: `translateX(-${offset}px)`,
             transition: "transform 0.05s linear",
@@ -70,19 +76,37 @@ export default function Experts() {
           {duplicatedExperts.map((expert, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[250px] bg-white rounded-xl border border-gray-200 shadow p-6 hover:shadow-lg hover:-translate-y-1 transition-transform cursor-pointer"
-              onClick={() => window.location.href = `/chat_${expert.name.toLowerCase().replace(" ", "_")}`}
+              className="relative w-64 min-h-[320px] group cursor-pointer flex-shrink-0"
             >
-              <img
-                src={expert.image}
-                alt={expert.name}
-                className="w-28 h-28 rounded-full object-cover mx-auto mb-4"
-              />
-              <h3 className="font-semibold text-lg text-gray-900 mb-1 text-center">{expert.name}</h3>
-              <p className="text-gray-600 font-medium text-sm mb-2 text-center">Areas of expertise include:</p>
-              <ul className="list-disc list-inside text-gray-600 text-sm text-left space-y-1">
-                {expert.areas.map((area, i) => <li key={i}>{area}</li>)}
-              </ul>
+              <div className="absolute inset-0 border border-dashed border-gray-800 rounded-lg -z-10"></div>
+
+              <div className="relative bg-gray-50 border border-gray-800 rounded-lg p-4 overflow-hidden transition-all duration-500 group-hover:-translate-x-2 group-hover:-translate-y-2 group-hover:border-[#5bc0eb] flex flex-col items-center">
+                <img
+                  src={expert.image}
+                  alt={expert.name}
+                  className="w-32 h-32 rounded-full object-cover mx-auto"
+                />
+                <p className="font-bold text-lg text-center">{expert.name}</p>
+
+                <ul className="list-disc list-inside text-sm text-gray-700 text-left w-full px-4 mt-2">
+                  {expert.areas.map((area, i) => (
+                    <li key={i}>{area}</li>
+                  ))}
+                </ul>
+
+                <div className="mt-3 opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 text-center w-full">
+                  <button
+                    onClick={() =>
+                      (window.location.href = `/chat_${expert.name
+                        .toLowerCase()
+                        .replace(" ", "_")}`)
+                    }
+                    className="bg-[#5bc0eb] text-white px-3 py-1 rounded-full font-semibold hover:bg-[#53aed4] transition-colors duration-300"
+                  >
+                    Chat
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
