@@ -162,7 +162,7 @@ export default function SignIn() {
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={handleGoogleError}
-              width="100%"
+              width="300"
               size="large"
               text="continue_with"
             />
