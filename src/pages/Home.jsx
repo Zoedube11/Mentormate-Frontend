@@ -19,17 +19,16 @@ export default function Home() {
       <Navbar />
 
       <div className="flex flex-col lg:flex-row w-full flex-1 px-4 sm:px-6 lg:px-8 xl:px-12 py-8 lg:py-12 gap-6 lg:gap-8 max-w-[1600px] mx-auto">
-        <div className="lg:w-1/2 flex flex-col gap-6">
-          <div className="bg-white/80 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 lg:p-8 border border-gray-100">
+        {/* Left side content (plain, no cards) */}
+        <div className="lg:w-1/2 flex flex-col gap-10">
             <Experts />
-          </div>
-          <div className="bg-white/80 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-6 lg:p-8 border border-gray-100">
             <FAQSection />
           </div>
-        </div>
+
+        {/* Right side: Authentication inside a white card */}
         {!isMobile && (
           <div className="lg:w-1/2 flex justify-center items-start lg:sticky lg:top-8 lg:self-start">
-            <div className="w-full bg-white shadow-xl rounded-2xl p-8 lg:p-10 border border-gray-200">
+            <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
               <Authentication />
             </div>
           </div>

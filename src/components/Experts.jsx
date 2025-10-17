@@ -55,7 +55,7 @@ export default function Experts() {
         >
           {duplicatedExperts.map((expert, index) => (
             <div key={index} className="relative w-64 min-h-[320px] group cursor-pointer flex-shrink-0">
-              <div className="absolute inset-0 border border-dashed border-gray-800 rounded-lg -z-10"></div>
+              <div className="absolute inset-0 border-gray-800 rounded-lg -z-10"></div>
 
               <div className="relative bg-gray-50 border border-gray-800 rounded-lg p-4 overflow-hidden transition-all duration-500 group-hover:-translate-x-2 group-hover:-translate-y-2 group-hover:border-[#5bc0eb] flex flex-col items-center">
                 <img src={expert.image} alt={expert.name} className="w-32 h-32 rounded-full object-cover mx-auto" />

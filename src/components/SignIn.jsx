@@ -14,12 +14,12 @@ export default function SignIn() {
   const [showForgot, setShowForgot] = useState(false);
 
   
-  useEffect(() => {
-    const user = localStorage.getItem("user") || localStorage.getItem("token");
-    if (user) {
-      navigate("/mentormate-homepage");
-    }
-  }, [navigate]);
+// useEffect(() => {
+//   const user = localStorage.getItem("user") || localStorage.getItem("token");
+//   if (user) {
+//     navigate("/mentormate-homepage");
+    //   }
+  // }, [navigate]);
 
   
   const handleSubmit = async (e) => {
@@ -33,20 +33,20 @@ export default function SignIn() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setMessage("❌ " + (data.error || `Server returned ${res.status}`));
+      return;
+    }
 
-      if (res.ok) {
+      const data = await res.json();
         localStorage.setItem("token", data.token);
         setMessage("✅ Sign-in successful!");
         setTimeout(() => navigate("/mentormate-homepage"), 800);
-      } else {
-        setMessage("❌ " + (data.error || "Sign-in failed."));
-      }
-    } catch (err) {
+          } catch (err) {
       setMessage("⚠️ " + err.message);
     }
   };
-
   
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ export default function SignIn() {
   return (
     <div>
       {!showForgot ? (
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white shadow-lg p-6 rounded-2xl">
+        <form onSubmit={handleSubmit} className="space-y-6 p-6 rounded-2xl">
           <h2 className="text-2xl font-bold text-gray-700">Sign in</h2>
           <p className="text-gray-500 text-sm">Log in to unlock instant expertise</p>
 
@@ -130,7 +130,7 @@ export default function SignIn() {
             />
             <button
               type="button"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"
+              className="absolute right-2 top-1/2 transform -translate-y-1/8 text-gray-500 text-lg"
               onClick={() => setSigninShowPassword(!signinShowPassword)}
               aria-label="Toggle password visibility"
             >
@@ -157,21 +157,25 @@ export default function SignIn() {
 
           <div className="text-center text-gray-400 my-4">or</div>
 
+<div className="flex flex-col gap-4 w-full max-w-[300px]">
           
-          <div className="flex flex-col gap-4">
+{/* Google button wrapper */}
+          <div className="w-full rounded-md flex justify-center items-center">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={handleGoogleError}
-              width="300"
-              size="large"
+              width="291"
+              size="extra large"
               text="continue_with"
             />
+</div>
 
           
+{/* Microsoft button */}
             <button
               type="button"
               onClick={handleMicrosoft}
-              className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-100 gap-2"
+              className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-100 gap-2 transition"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" className="inline-block">
                 <rect x="0" y="0" width="11" height="11" fill="#F35325" />
@@ -182,10 +186,11 @@ export default function SignIn() {
               Continue with Microsoft
             </button>
           </div>
+
         </form>
       ) : (
         // Forgot password form
-        <form onSubmit={handleForgotPassword} className="space-y-4 bg-white shadow-lg p-6 rounded-2xl">
+        <form onSubmit={handleForgotPassword} className="space-y-4 p-6 rounded-2xl">
           <h2 className="text-xl font-bold">Forgot Password</h2>
           <p className="text-gray-600 text-sm">Enter your email to reset your password</p>
           <input

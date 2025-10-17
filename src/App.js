@@ -13,8 +13,7 @@ import GoogleCallback from "./pages/GoogleCallback";
 import RedirectHandler from "./components/RedirectHandler";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-
-  const clientId = "768995849404-hdmneobkipbfb9i43igllsn487sadjjh.apps.googleusercontent.com";
+ const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   function App() {
   return (

@@ -10,6 +10,15 @@ import SisNandiImg from "../assets/character5.png";
 
 export default function MentorMateHome() {
   const navigate = useNavigate(); 
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  // Mock logged-in user
+  const user = {
+    initials: "ZD",
+    name: "Zoe Dube",
+    email: "zoe@skxconsulting.co.za",
+  };
+
   const experts = [
     {
       name: "Mama Dudu",
@@ -44,12 +53,14 @@ export default function MentorMateHome() {
   ];
 
   const containerRef = useRef(null);
+  const profileRef = useRef(null);
   const [offset, setOffset] = useState(0);
   const [hoveredCard, setHoveredCard] = useState(null);
   const scrollSpeed = 0.3;
 
   const duplicatedExperts = [...experts, ...experts, ...experts];
 
+  // Scroll animation
   useEffect(() => {
     let animationId;
 
@@ -67,35 +78,31 @@ export default function MentorMateHome() {
     return () => cancelAnimationFrame(animationId);
   }, []);
 
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleChatClick = (expertName) => {
     window.location.href = `/chat_${expertName.toLowerCase().replace(" ", "_")}`;
   };
 
-  // Logout handler
-  const handleLogout = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:5000/logout", {
-        method: "POST", 
-        credentials: "include", 
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
+  const handleLogout = () => {
+    setIsProfileOpen(false);
         navigate("/"); 
-      } else {
-        console.error("Logout failed");
-        alert("Logout failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error logging out:", error);
-      alert("An error occurred while logging out.");
-    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Navbar */}
       <nav className="bg-white shadow-md px-6 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -103,16 +110,50 @@ export default function MentorMateHome() {
           </div>
 
           {/* Navbar buttons */}
-          <div className="flex gap-4 items-center">
-            <button className="text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="flex gap-4 items-center relative" ref={profileRef}>
+            {user && (
+              <button
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+              >
               Profile
             </button>
+            )}
+
+            {isProfileOpen && (
+              <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
+                {/* Logout link */}
+                <div className="flex justify-end p-2 border-b border-gray-200">
             <button
               onClick={handleLogout} 
-              className="px-4 py-2 bg-gradient-to-r from-teal-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all"
+                    className="text-red-500 hover:text-red-700 text-sm font-semibold"
             >
               Logout
             </button>
+                </div>
+
+                {/* Profile Info */}
+                <div className="flex items-center p-4 gap-4">
+                  <div className="bg-gray-300 text-gray-700 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold">
+                    {user.initials}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-800">{user.name}</div>
+                    <div className="text-gray-500 text-sm">{user.email}</div>
+                  </div>
+                </div>
+
+                {/* Links */}
+                <div className="border-t border-gray-200">
+                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700">
+                    View Account
+                  </button>
+                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700">
+                    My Microsoft
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
@@ -126,7 +167,7 @@ export default function MentorMateHome() {
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-blue-900 mb-6 leading-tight">
             Welcome to{" "}
             <span className="bg-gradient-to-r from-teal-500 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
               MentorMate
@@ -195,18 +236,15 @@ export default function MentorMateHome() {
                   onMouseEnter={() => setHoveredCard(index)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
-                  {/* Card shadow/border effect */}
                   <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl blur-xl"
                        style={{background: `linear-gradient(to bottom right, ${expert.gradient})`}}>
                   </div>
 
-                  {/* Main card */}
                   <div className="relative h-full bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl border border-gray-100">
                     <div className={`h-24 bg-gradient-to-r ${expert.gradient} relative overflow-hidden`}>
                       <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                     </div>
 
-                    {/* Avatar */}
                     <div className="flex justify-center -mt-16 mb-4">
                       <div className="relative">
                         <div className={`absolute inset-0 bg-gradient-to-r ${expert.gradient} rounded-full blur-md opacity-50`}></div>
@@ -218,7 +256,6 @@ export default function MentorMateHome() {
                       </div>
                     </div>
 
-                    {/* Content */}
                     <div className="px-6 pb-6 text-center">
                       <h3 className="text-2xl font-bold text-gray-900 mb-4">
                         {expert.name}
@@ -236,7 +273,6 @@ export default function MentorMateHome() {
                         ))}
                       </div>
 
-                      {/* Chat button */}
                       <button
                         onClick={() => handleChatClick(expert.name)}
                         className={`w-full py-3 px-6 bg-gradient-to-r ${expert.gradient} text-white font-semibold rounded-xl shadow-md hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1`}

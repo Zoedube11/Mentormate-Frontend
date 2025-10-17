@@ -147,7 +147,7 @@ export default function SignUp({ formData, handleChange }) {
             />
             <button
               type="button"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"
+              className="absolute right-2 top-1/2 transform -translate-y-1/8 text-gray-500 text-lg"
               onClick={() => setShowPassword(!showPassword)}
             >
               👁️
@@ -166,7 +166,7 @@ export default function SignUp({ formData, handleChange }) {
             />
             <button
               type="button"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"
+              className="absolute right-2 mb-25 top-1/2 transform -translate-y-1/8 text-gray-500 text-lg"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               👁️

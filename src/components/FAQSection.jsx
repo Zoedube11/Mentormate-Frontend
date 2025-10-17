@@ -15,19 +15,27 @@ export default function FAQSection() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Learn more about us</h2>
+    <h2 className="text-2xl font-bold text-gray-900 mb-6">Learn more about us</h2>
 
-      <div className="space-y-4">
+    <div className="space-y-6">
         {faqs.map((faq, index) => (
-          <div key={index} className="border rounded-md p-4">
+        <div key={index} className="pb-4 border-b-4 border-blue-900">
             <button
               className="w-full flex justify-between items-center text-left text-gray-900 font-medium"
               onClick={() => toggleFAQ(index)}
             >
               {faq.question}
-              <span className={`transform transition-transform ${openIndex === index ? "rotate-180" : ""}`}>▼</span>
+            <span
+              className={`transform transition-transform ${
+                openIndex === index ? "rotate-180" : ""
+              }`}
+            >
+              ▼
+            </span>
             </button>
-            {openIndex === index && <p className="mt-2 text-gray-700">{faq.answer}</p>}
+          {openIndex === index && (
+            <p className="mt-2 text-gray-700">{faq.answer}</p>
+          )}
           </div>
         ))}
       </div>
