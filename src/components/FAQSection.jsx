@@ -14,17 +14,17 @@ export default function FAQSection() {
   const toggleFAQ = (index) => setOpenIndex(openIndex === index ? null : index);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+  <div className="max-w-2xl mx-auto px-4 py-8">
     <h2 className="text-2xl font-bold text-gray-900 mb-6">Learn more about us</h2>
 
     <div className="space-y-6">
-        {faqs.map((faq, index) => (
+      {faqs.map((faq, index) => (
         <div key={index} className="pb-4 border-b-4 border-blue-900">
-            <button
-              className="w-full flex justify-between items-center text-left text-gray-900 font-medium"
-              onClick={() => toggleFAQ(index)}
-            >
-              {faq.question}
+          <button
+            className="w-full flex justify-between items-center text-left text-gray-900 font-medium"
+            onClick={() => toggleFAQ(index)}
+          >
+            {faq.question}
             <span
               className={`transform transition-transform ${
                 openIndex === index ? "rotate-180" : ""
@@ -32,13 +32,13 @@ export default function FAQSection() {
             >
               ▼
             </span>
-            </button>
+          </button>
           {openIndex === index && (
             <p className="mt-2 text-gray-700">{faq.answer}</p>
           )}
-          </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
-  );
+  </div>
+);
 }

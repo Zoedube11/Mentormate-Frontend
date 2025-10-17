@@ -14,24 +14,24 @@ export default function SignIn() {
   const [showForgot, setShowForgot] = useState(false);
 
   
-// useEffect(() => {
-//   const user = localStorage.getItem("user") || localStorage.getItem("token");
-//   if (user) {
-//     navigate("/mentormate-homepage");
-    //   }
+  // useEffect(() => {
+  //   const user = localStorage.getItem("user") || localStorage.getItem("token");
+  //   if (user) {
+  //     navigate("/mentormate-homepage");
+  //   }
   // }, [navigate]);
 
   
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage("");
+  e.preventDefault();
+  setMessage("");
 
-    try {
-      const res = await fetch("http://127.0.0.1:5000/api/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+  try {
+    const res = await fetch("http://127.0.0.1:5000/api/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
@@ -39,14 +39,14 @@ export default function SignIn() {
       return;
     }
 
-      const data = await res.json();
-        localStorage.setItem("token", data.token);
-        setMessage("✅ Sign-in successful!");
-        setTimeout(() => navigate("/mentormate-homepage"), 800);
-          } catch (err) {
-      setMessage("⚠️ " + err.message);
-    }
-  };
+    const data = await res.json();
+    localStorage.setItem("token", data.token);
+    setMessage("✅ Sign-in successful!");
+    setTimeout(() => navigate("/mentormate-homepage"), 800);
+  } catch (err) {
+    setMessage("⚠️ " + err.message);
+  }
+};
   
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -157,35 +157,35 @@ export default function SignIn() {
 
           <div className="text-center text-gray-400 my-4">or</div>
 
-<div className="flex flex-col gap-4 w-full max-w-[300px]">
-          
-{/* Google button wrapper */}
-          <div className="w-full rounded-md flex justify-center items-center">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              width="291"
-              size="extra large"
-              text="continue_with"
-            />
+        <div className="flex flex-col gap-4 w-full max-w-[300px]">
+
+  {/* Google button wrapper */}
+  <div className="w-full rounded-md flex justify-center items-center">
+  <GoogleLogin
+    onSuccess={handleGoogleSuccess}
+    onError={handleGoogleError}
+    width="291"
+    size="extra large"
+    text="continue_with"
+  />
 </div>
 
-          
-{/* Microsoft button */}
-            <button
-              type="button"
-              onClick={handleMicrosoft}
-              className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-100 gap-2 transition"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" className="inline-block">
-                <rect x="0" y="0" width="11" height="11" fill="#F35325" />
-                <rect x="13" y="0" width="11" height="11" fill="#81BC06" />
-                <rect x="0" y="13" width="11" height="11" fill="#05A6F0" />
-                <rect x="13" y="13" width="11" height="11" fill="#FFBA08" />
-              </svg>
-              Continue with Microsoft
-            </button>
-          </div>
+
+  {/* Microsoft button */}
+  <button
+    type="button"
+    onClick={handleMicrosoft}
+    className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-100 gap-2 transition"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" className="inline-block">
+      <rect x="0" y="0" width="11" height="11" fill="#F35325" />
+      <rect x="13" y="0" width="11" height="11" fill="#81BC06" />
+      <rect x="0" y="13" width="11" height="11" fill="#05A6F0" />
+      <rect x="13" y="13" width="11" height="11" fill="#FFBA08" />
+    </svg>
+    Continue with Microsoft
+  </button>
+</div>
 
         </form>
       ) : (

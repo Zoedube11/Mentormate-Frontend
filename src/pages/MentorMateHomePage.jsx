@@ -97,7 +97,7 @@ export default function MentorMateHome() {
 
   const handleLogout = () => {
     setIsProfileOpen(false);
-        navigate("/"); 
+    navigate("/");
   };
 
   return (
@@ -116,20 +116,20 @@ export default function MentorMateHome() {
                 className="text-gray-600 hover:text-gray-900 transition-colors"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
               >
-              Profile
-            </button>
+                Profile
+              </button>
             )}
 
             {isProfileOpen && (
               <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
                 {/* Logout link */}
                 <div className="flex justify-end p-2 border-b border-gray-200">
-            <button
-              onClick={handleLogout} 
+                  <button
+                    onClick={handleLogout}
                     className="text-red-500 hover:text-red-700 text-sm font-semibold"
-            >
-              Logout
-            </button>
+                  >
+                    Logout
+                  </button>
                 </div>
 
                 {/* Profile Info */}

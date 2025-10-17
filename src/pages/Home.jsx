@@ -21,9 +21,9 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row w-full flex-1 px-4 sm:px-6 lg:px-8 xl:px-12 py-8 lg:py-12 gap-6 lg:gap-8 max-w-[1600px] mx-auto">
         {/* Left side content (plain, no cards) */}
         <div className="lg:w-1/2 flex flex-col gap-10">
-            <Experts />
-            <FAQSection />
-          </div>
+          <Experts />
+          <FAQSection />
+        </div>
 
         {/* Right side: Authentication inside a white card */}
         {!isMobile && (
