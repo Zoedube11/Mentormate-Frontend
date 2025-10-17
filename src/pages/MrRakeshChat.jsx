@@ -58,7 +58,8 @@ export default function MrRakeshChat() {
         }),
       },
     ]);
-
+     
+    // api endpoints
     const endpoint = "https://oompiet.space/rag";
 
     try {
