@@ -50,7 +50,7 @@ export default function BraVusiChat() {
       },
     ]);
 
-    
+    // api endpoint
     const endpoint = "https://oompiet.space/rag";
     const conversationId = sessionStorage.getItem("conversation_id");
 
