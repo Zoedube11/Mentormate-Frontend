@@ -49,7 +49,7 @@ export default function MamaDuduChat() {
       },
     ]);
 
-  
+  // chat api endpoint
     const endpoint = "https://oompiet.space/rag";
     const requestBody = {
       query: txt,
