@@ -92,7 +92,7 @@ export default function SignIn() {
             />
             <button
               type="button"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"
+              className="absolute right-2 top-1/2 transform -translate-y-1/6 text-gray-500 text-lg"
               onClick={() => setSigninShowPassword(!signinShowPassword)}
               aria-label="Toggle password visibility"
             >
