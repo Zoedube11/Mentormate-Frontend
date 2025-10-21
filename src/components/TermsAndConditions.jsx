@@ -250,3 +250,12 @@ export default function TermsAndConditions() {
     </div>
   );
 }
+
+
+  
+  // useEffect(() => {
+  //   const user = localStorage.getItem("user") || localStorage.getItem("token");
+  //   if (user) {
+  //     navigate("/mentormate-homepage");
+  //   }
+  // }, [navigate]);

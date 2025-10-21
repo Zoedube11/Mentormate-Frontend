@@ -5,19 +5,16 @@ export default function GoogleCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Parse URL parameters
     const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
     const email = params.get("email");
+    const name = params.get("name");
 
-    if (token) {
-      localStorage.setItem("token", token);
+    if (email) {
       localStorage.setItem("userEmail", email);
-
-      
-      navigate("/mentormate-homepage");
+      localStorage.setItem("userName", name);
+      navigate("/mentormate-homepage"); // <-- Directly go to dashboard
     } else {
-      navigate("/auth");
+      navigate("/"); // fallback to public home
     }
   }, [navigate]);
 
@@ -27,3 +24,4 @@ export default function GoogleCallback() {
     </div>
   );
 }
+
