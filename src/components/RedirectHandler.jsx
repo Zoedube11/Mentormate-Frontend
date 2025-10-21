@@ -1,10 +1,11 @@
-// src/components/RedirectHandler.jsx
-// // import { useEffect } from "react";
+// // src/components/RedirectHandler.jsx
+// import { useEffect } from "react";
 
 // export default function RedirectHandler() {
 //   useEffect(() => {
+//     // Automatically redirect to your React app after login
 //     const timer = setTimeout(() => {
-//       // window.location.href = "http://127.0.0.1:5000/login?redirect_url=http://localhost:3000/mentormate-homepage";
+//       window.location.href = "http://127.0.0.1:5000/login?redirect_url=http://localhost:3000/mentormate-homepage";
 //     }, 1000); 
 
 //     return () => clearTimeout(timer);
