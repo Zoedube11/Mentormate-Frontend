@@ -1,5 +1,5 @@
 // src/App.jsx
-import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import AuthPage from "./pages/AuthPage";
 import MamaDuduChat from "./pages/MamaDuduChat";
@@ -10,6 +10,7 @@ import OomPietChat from "./pages/OomPietChat";
 import MentorMateHomePage from "./pages/MentorMateHomePage";
 import TermsAndConditions from "./components/TermsAndConditions"; 
 import GoogleCallback from "./pages/GoogleCallback";
+import MicrosoftCallback from "./pages/MicrosoftCallback";
 import RedirectHandler from "./components/RedirectHandler";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -33,7 +34,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
           {/* Extra routes */}
           <Route path="/terms" element={<TermsAndConditions />} />
+          <Route path="/google-callback" element={<GoogleCallback />} />
           <Route path="/auth/google/callback" element={<GoogleCallback />} />
+          <Route path="/microsoft-callback" element={<MicrosoftCallback />} />
           <Route path="/redirect" element={<RedirectHandler />} />
       </Routes>
     </GoogleOAuthProvider>

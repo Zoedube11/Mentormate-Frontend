@@ -18,17 +18,17 @@ export default function TermsAndConditions() {
       {/* Main Content */}
       <main className="flex-1 flex justify-center items-start py-8 px-4">
         <div className="bg-white rounded-2xl shadow-lg max-w-5xl w-full p-6 sm:p-10">
-          <h1 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-6 text-center border-b-4 border-blue-600 pb-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#1d78a3] mb-6 text-center border-b-4 border-[#1d78a3] pb-4">
             Software Licence Terms and Conditions
           </h1>
 
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-blue-600 rounded-r-lg p-4 mb-6">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-l-4 border-[#1d78a3] rounded-r-lg p-4 mb-6">
             <strong>Important:</strong> These Terms govern your use of the Mentormate software. By accessing or using the Software, you agree to be bound by these Terms and Conditions.
           </div>
 
           {/* Clause 1 */}
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 mb-4">
-            <span className="block font-semibold text-blue-600 mb-2">1. Background</span>
+            <span className="block font-semibold text-[#1d78a3] mb-2">1. Background</span>
             <p className="text-gray-800 leading-relaxed mb-2">
               <strong>1.1</strong> The Supplier is the entire legal and beneficial owner and licensor of the Software and is willing to license the Customer to use these products subject to the Terms.
             </p>
@@ -36,9 +36,9 @@ export default function TermsAndConditions() {
 
           {/* Clause 2 */}
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 mb-4">
-            <span className="block font-semibold text-blue-600 mb-3">2. Agreed Terms</span>
+            <span className="block font-semibold text-[#1d78a3] mb-3">2. Agreed Terms</span>
             
-            <h3 className="text-lg font-semibold text-blue-600 mt-4 mb-2">Interpretation</h3>
+            <h3 className="text-lg font-semibold text-[#1d78a3] mt-4 mb-2">Interpretation</h3>
             <p className="text-gray-800 leading-relaxed mb-3">
               <strong>2.1</strong> The definitions and rules of interpretation in this clause apply in these Terms.
             </p>

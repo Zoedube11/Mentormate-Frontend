@@ -15,18 +15,38 @@ export default function SignIn() {
     setMessage("");
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/signin", {
+      const res = await fetch("http://localhost:5000/api/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("token", data.token);
-        setMessage("✅ Sign-in successful!");
-        setTimeout(() => navigate("/mentormate-homepage"), 800);
+        // Store user data in localStorage (for display purposes only)
+        localStorage.setItem("userEmail", data.user.email);
+        localStorage.setItem("userName", `${data.user.firstName} ${data.user.lastName}`);
+        if (data.user.picture) localStorage.setItem("userPicture", data.user.picture);
+        
+        // Check session after login
+        try {
+          const sessionRes = await fetch("http://localhost:5000/api/check-session", {
+            credentials: 'include'
+          });
+          const sessionData = await sessionRes.json();
+          if (sessionRes.ok && sessionData.authenticated) {
+            setMessage("✅ Sign-in successful! Session active.");
+            setTimeout(() => navigate("/mentormate-homepage"), 1000);
+          } else {
+            setMessage("⚠️ Sign-in succeeded, but session not active.");
+            setTimeout(() => navigate("/"), 1500);
+          }
+        } catch (err) {
+          setMessage("⚠️ Sign-in succeeded, but session check failed: " + err.message);
+          setTimeout(() => navigate("/mentormate-homepage"), 1500);
+        }
       } else {
         setMessage("❌ " + (data.error || "Sign-in failed."));
       }
@@ -40,7 +60,7 @@ export default function SignIn() {
     setMessage("");
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/forgot-password", {
+      const res = await fetch("http://localhost:5000/api/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: forgotEmail }),
@@ -75,7 +95,7 @@ export default function SignIn() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="Email"
-              className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1d78a3]"
             />
           </div>
 
@@ -88,7 +108,7 @@ export default function SignIn() {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Password"
-              className="mt-1 block w-full border rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="mt-1 block w-full border rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-[#1d78a3]"
             />
             <button
               type="button"
@@ -100,19 +120,26 @@ export default function SignIn() {
             </button>
           </div>
 
-          <div className="flex justify-between items-center text-sm text-gray-600">
-            <label className="flex items-center">
-              <input type="checkbox" className="mr-1" />
-              Keep me signed in
+          <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm">
+            {/* Checkbox + label */}
+            <label className="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-[#1d78a3] focus:ring-[#1d78a3]" />
+              <span className="whitespace-nowrap">Keep me signed in</span>
             </label>
-            <button type="button" onClick={() => setShowForgot(true)} className="text-teal-600 hover:underline">
+
+            {/* Forgot password link */}
+            <button
+              type="button"
+              onClick={() => setShowForgot(true)}
+              className="text-[#1d78a3] hover:text-[#1d78a3] hover:underline whitespace-nowrap text-left sm:text-right"
+            >
               Forgot password?
             </button>
           </div>
 
           {message && <p className="text-sm text-red-500">{message}</p>}
 
-          <button type="submit" className="w-full bg-teal-500 text-white py-2 rounded-md font-semibold hover:bg-teal-600">
+          <button type="submit" className="w-full bg-[#1d78a3] text-white py-2 rounded-md font-semibold hover:bg-[#1d78a3]">
             Sign in
           </button>
 
@@ -122,9 +149,7 @@ export default function SignIn() {
             {/* Google SVG Button */}
             <button
               type="button"
-              onClick={() => window.location.href = `http://127.0.0.1:5000/login?redirect_url=${encodeURIComponent(
-                "http://localhost:3000/mentormate-homepage")}`
-              }
+              onClick={() => window.location.href = 'http://localhost:5000/login/google'}
               className="w-full py-3.5 text-base font-medium bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-3"
             >
               <svg width="18" height="18" viewBox="0 0 48 48">
@@ -161,9 +186,9 @@ export default function SignIn() {
             value={forgotEmail}
             onChange={(e) => setForgotEmail(e.target.value)}
             required
-            className="block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1d78a3]"
           />
-          <button type="submit" className="w-full bg-teal-500 text-white py-2 rounded-md font-semibold hover:bg-teal-600">
+          <button type="submit" className="w-full bg-[#1d78a3] text-white py-2 rounded-md font-semibold hover:bg-[#1d78a3]">
             Send Reset Link
           </button>
           <button type="button" onClick={() => setShowForgot(false)} className="w-full bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300">

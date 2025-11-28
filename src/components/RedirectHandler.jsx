@@ -1,19 +1,38 @@
-// // src/components/RedirectHandler.jsx
-// import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-// export default function RedirectHandler() {
-//   useEffect(() => {
-//     // Automatically redirect to your React app after login
-//     const timer = setTimeout(() => {
-//       window.location.href = "http://127.0.0.1:5000/login?redirect_url=http://localhost:3000/mentormate-homepage";
-//     }, 1000); 
+export default function RedirectHandler() {
+  const navigate = useNavigate();
+  const [checking, setChecking] = useState(true);
 
-//     return () => clearTimeout(timer);
-//   }, []);
+  useEffect(() => {
+    // Check if user has active session
+    fetch("http://localhost:5000/api/check-session", {
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.authenticated) {
+          navigate("/mentormate-homepage");
+        } else {
+          navigate("/");
+        }
+      })
+      .catch(() => {
+        navigate("/");
+      })
+      .finally(() => {
+        setChecking(false);
+      });
+  }, [navigate]);
 
-//   return (
-//     <div className="flex justify-center items-center h-screen text-gray-700 text-lg">
-//       {/* Redirecting to MentorMate... */}
-//     </div>
-//   );
-// }
+  if (checking) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-700">
+        <p>Checking authentication...</p>
+      </div>
+    );
+  }
+
+  return null;
+}
